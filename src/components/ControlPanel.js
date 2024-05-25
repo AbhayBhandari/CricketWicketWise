@@ -5,7 +5,6 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
-
 import UndoRedo from "./../containers/UndoRedo.container";
 
 const ControlPanel = (props) => {
@@ -108,7 +107,7 @@ const ControlPanel = (props) => {
         <View style={{ flex: 1 }}>
           <View style={{ display: "flex", flexDirection: "column" }}>
             <TouchableOpacity
-              onPress={() => handleWideBallPress()}
+              onPress={handleWideBallPress}
               style={[
                 styles.rectButton,
                 {
@@ -123,7 +122,7 @@ const ControlPanel = (props) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => handleNoBallPress()}
+              onPress={handleNoBallPress}
               style={[
                 styles.rectButton,
                 {
@@ -138,7 +137,7 @@ const ControlPanel = (props) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => handleWicketPress()}
+              onPress={handleWicketPress}
               style={[
                 styles.rectButton,
                 {

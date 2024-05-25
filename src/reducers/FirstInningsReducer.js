@@ -18,7 +18,7 @@ const initialstate = {
   projected_score: 0,
   over_details: {
     runs: 0,
-    ball_left: 6,
+    balls_remaining: 6,
     this_over: [],
   },
   players: 11,
@@ -55,6 +55,10 @@ function firstInnReducer(state = initialstate, action) {
       return {
         ...state,
         wickets_down: state.wickets_down + 1,
+        over_details: {
+          ...state.over_details,
+          this_over: [...state.over_details.this_over, "W"],
+        },
       };
     case MatchActionTypes.WIDEBALL_INN_1:
       return {
@@ -63,6 +67,10 @@ function firstInnReducer(state = initialstate, action) {
           ...state.extras,
           wide_balls: state.extras.wide_balls + 1,
         },
+        over_details: {
+          ...state.over_details,
+          this_over: [...state.over_details.this_over, "WD"],
+        },
       };
     case MatchActionTypes.NOBALL_INN_1:
       return {
@@ -70,6 +78,10 @@ function firstInnReducer(state = initialstate, action) {
         extras: {
           ...state.extras,
           no_balls: state.extras.no_balls + 1,
+        },
+        over_details: {
+          ...state.over_details,
+          this_over: [...state.over_details.this_over, "NB"],
         },
       };
     case MatchActionTypes.LOAD_STORAGE:

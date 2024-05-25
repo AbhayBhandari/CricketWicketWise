@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 
 const ThisOverHits = (props) => {
-  const dotArray = new Array(6 - props.scores.length).fill("·");
+  const dotArrayLength =
+    6 -
+    props.scores.filter(
+      (score) => score !== "wd" && score !== "nb" && score !== "w"
+    ).length;
+  const dotArray = new Array(dotArrayLength).fill("·");
   const displayArray = [...props.scores, ...dotArray];
 
   return (
@@ -10,6 +15,7 @@ const ThisOverHits = (props) => {
       style={{
         flexDirection: "row",
         justifyContent: "center",
+        flexWrap: "wrap",
         marginLeft: 25,
         marginTop: 30,
         marginRight: 25,
@@ -17,11 +23,23 @@ const ThisOverHits = (props) => {
       }}
     >
       <View>
-        <Text style={{ color: "#666666", fontSize: 22, fontWeight: "900" }}>
+        <Text style={{ fontSize: 20, fontWeight: "900" }}>
           {displayArray.map((item, index) => (
-            <Text key={index.toString()}>
+            <Text
+              key={index.toString()}
+              style={{
+                color:
+                  item === "W"
+                    ? "red"
+                    : item === "WD"
+                    ? "blue"
+                    : item === "NB"
+                    ? "orange"
+                    : "#666666",
+              }}
+            >
               {item}
-              {"     "}
+              {"   "}
             </Text>
           ))}
         </Text>
