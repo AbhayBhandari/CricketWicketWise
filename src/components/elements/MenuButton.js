@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 const MenuButton = () => {
   return (
     <View>
       <View style={styles.settingsView}>
-        <Text style={styles.settingsButton}>...</Text>
+        <Image style={styles.settingsButton} source={require("./../../../assets/settings.png")} />
       </View>
     </View>
   );
@@ -14,11 +14,13 @@ const MenuButton = () => {
 
 const styles = StyleSheet.create({
   settingsView: {
-    alignItems: 'flex-end',
+    marginRight: 10,
+    marginTop:10,
+    alignItems: "flex-end",
   },
   settingsButton: {
-    fontSize: responsiveFontSize(5),
-    marginRight: 20,
+    width: responsiveFontSize(5),
+    height: responsiveFontSize(5),
   },
 });
 

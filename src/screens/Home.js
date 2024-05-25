@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   responsiveHeight,
@@ -10,47 +17,60 @@ import Constants from "expo-constants";
 
 import MenuButton from "./../components/elements/MenuButton";
 import HalfModal from "./../components/elements/HalfModal"; // Ensure this component is used somewhere in your project
+import colors from "../utilities/Colors";
+import MenuListFirstInnings from "../components/MenuListFirstInnings";
+import MatchConfigurationContainer from "../containers/MatchConfiguration.container";
+import MenuListHome from "../components/MenuListHome";
 
 const Home = () => {
   const navigation = useNavigation();
 
+  const [menuListVisible, setMenuListVisible] = useState(false);
+  const [matchSettingsVisible, setMatchSettingsVisible] = useState(false);
+
+  const onMenuBtnPress = () => setMenuListVisible(true);
+  const closeMenu = () => setMenuListVisible(false);
+  const showMatchSettings = () => setMatchSettingsVisible(true);
+  const closeMatchSettings = () => setMatchSettingsVisible(false);
+
+  const onMatchSettingsPress = () => {
+    closeMenu();
+    showMatchSettings();
+  };
+
   const handleMatchPress = (item) => {
+    console.log("item", item);
     navigation.navigate("SingleMatchInn1", { match: item });
   };
 
   return (
     <View style={styles.page}>
-      <MenuButton />
+      <TouchableOpacity onPress={onMenuBtnPress}>
+        <MenuButton />
+      </TouchableOpacity>
+
+      <HalfModal show={menuListVisible}>
+        <MenuListHome
+          onMatchSettingsPress={onMatchSettingsPress}
+          onClosePress={closeMenu}
+        />
+      </HalfModal>
+
+      <HalfModal show={matchSettingsVisible}>
+        <MatchConfigurationContainer close={closeMatchSettings} />
+      </HalfModal>
 
       <View style={styles.parent}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.textStyle}>START GAME</Text>
-        </View>
-
         <TouchableOpacity
           style={styles.item}
           onPress={() => handleMatchPress({})}
         >
-          <View>
-            <Image
-              style={styles.img}
-              source={require("./../../assets/single-match-icon.png")}
-            />
-            <Text style={styles.matchTypeText}>SINGLE MATCH</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => handleMatchPress({})}
-        >
-          <View>
-            <Image
-              style={styles.img}
-              source={require("./../../assets/tournament-icon.png")}
-            />
-            <Text style={styles.matchTypeText}>TOURNAMENT</Text>
-          </View>
+          <Image
+            resizeMode="contain"
+            style={styles.img}
+            source={require("./../../assets/tournament-icon.png")}
+          />
+          <Text style={styles.matchTypeText}>TOURNAMENT</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -59,17 +79,14 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "white",
-    height: "100%",
+    flex: 1,
+    backgroundColor: colors.white,
     paddingTop: Constants.statusBarHeight,
   },
   parent: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
+    top: Dimensions.get("screen").height / 4.2,
   },
   item: {
-    flex: 2,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -78,12 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  textStyle: {
-    fontSize: responsiveFontSize(2),
-    color: "#888888",
-  },
   matchTypeText: {
-    marginTop: 30,
+    marginTop: 20,
     fontSize: responsiveFontSize(2),
     color: "#555555",
     fontWeight: "bold",
@@ -91,10 +104,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   img: {
-    marginTop: 1,
-    marginRight: 2,
-    width: responsiveWidth(60),
-    height: responsiveHeight(17),
+    width: responsiveWidth(65),
+    height: responsiveHeight(25),
   },
 });
 
