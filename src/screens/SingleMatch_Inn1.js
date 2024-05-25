@@ -13,6 +13,7 @@ import ControlPanel1Container from "./../containers/ControlPanel1.container";
 import MatchConfigurationContainer from "./../containers/MatchConfiguration.container";
 import HalfModal from "./../components/elements/HalfModal";
 import MenuListFirstInnings from "./../components/MenuListFirstInnings";
+import { responsiveFontSize } from "react-native-responsive-dimensions";
 
 const SingleMatchInn1 = () => {
   const navigation = useNavigation();
@@ -41,7 +42,12 @@ const SingleMatchInn1 = () => {
     <View style={styles.page}>
       <View style={{ flexGrow: 1, flexBasis: "15%" }}>
         <TouchableOpacity onPress={onMenuBtnPress}>
-          <MenuButton />
+          <MenuButton
+            iconStyle={{
+              width: responsiveFontSize(4),
+              height: responsiveFontSize(4),
+            }}
+          />
         </TouchableOpacity>
 
         <FirstInningsContainer />
